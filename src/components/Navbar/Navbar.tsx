@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navbar, Container, Nav, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import NewDataButton from './components/NewDataButton'
 
 export default function NavigationBar() {
     return (
@@ -11,9 +12,7 @@ export default function NavigationBar() {
                 <Navbar.Collapse style={{ marginRight: 0 }} id="basic-navbar-nav">
                     <Nav className="me-auto align-items-center">
                         {/* <Link className='nav-link' to="/">Assignment List</Link> */}
-                        <Link className='nav-link ml-4' to="/new">
-                            <Button variant="primary">New Data!</Button>
-                        </Link>
+<NewDataButton/>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
