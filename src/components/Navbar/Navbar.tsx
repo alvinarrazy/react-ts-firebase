@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { Login } from '../../pages'
 import { showModal } from '../../redux/actions/modalActions'
 import LoginButton from './components/LoginButton'
 
@@ -11,7 +12,7 @@ interface Props {
 function NavigationBar({ showModal }: Props) {
 
     function showLoginModal() {
-        showModal("Login", <Tes />)
+        showModal("Login", <Login />)
     }
 
     return (
@@ -44,9 +45,3 @@ const mapDispatchToProps = (dispatch: any) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar)
-
-function Tes() {
-    return (
-        <p>Tes</p>
-    )
-}
