@@ -5,15 +5,17 @@ import "./theme/css/theme.css"
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { Home } from './pages';
 import { Navbar } from './components';
+import ModalComp from './components/Modal/Modal';
 
 function App() {
   return (
     <>
-    <Router>
-    <Navbar/> 
-      <Route path='/' exact component={Home} />
-    </Router>
-  </>
+      <Router>
+        <Navbar />
+        <ModalComp />
+        <Route path='/' exact component={Home} />
+      </Router>
+    </>
   );
 }
 

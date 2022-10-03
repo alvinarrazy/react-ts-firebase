@@ -1,9 +1,19 @@
 import React from 'react'
-import { Navbar, Container, Nav, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import NewDataButton from './components/NewDataButton'
+import { Navbar, Container, Nav } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { showModal } from '../../redux/actions/modalActions'
+import LoginButton from './components/LoginButton'
 
-export default function NavigationBar() {
+interface Props {
+    showModal: (title: string, children: JSX.Element) => any,
+}
+
+function NavigationBar({ showModal }: Props) {
+
+    function showLoginModal() {
+        showModal("Login", <Tes />)
+    }
+
     return (
         <Navbar bg="light" expand="lg">
             <Container fluid>
@@ -12,10 +22,31 @@ export default function NavigationBar() {
                 <Navbar.Collapse style={{ marginRight: 0 }} id="basic-navbar-nav">
                     <Nav className="me-auto align-items-center">
                         {/* <Link className='nav-link' to="/">Assignment List</Link> */}
-<NewDataButton/>
+                        <LoginButton
+                            onClick={() => showLoginModal()}
+                        />
                     </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
+    )
+}
+
+const mapStateToProps = (state: any) => {
+    return {
+
+    }
+}
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        showModal: (title: string, children: JSX.Element) => dispatch(showModal(title, children))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationBar)
+
+function Tes() {
+    return (
+        <p>Tes</p>
     )
 }
