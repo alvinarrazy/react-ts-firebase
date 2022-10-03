@@ -8,18 +8,19 @@ const userService = {
 
 export default userService
 
-async function register(email:string, password:string, data: object) {
+async function register(email:string, password:string, username: string) {
     try {
 
-        // await createUserWithEmailAndPassword(auth, email.trim(), password)
+        let newUser = await createUserWithEmailAndPassword(auth, email.trim(), password)
 
-        // let response = await addDoc(collection(db, "users"), {
-        //     //...data
-        // })
+        let response = await addDoc(collection(db, "users", newUser.user.uid), {
+            username: username
+        })
 
-        // return { result: response }
-    } catch (error) {
-        // console.log('Error Line 26 userServices.js', error)
-        // return { error: error.message }
+        return { result: response }
+    } catch (error: any) {
+        let message = error
+        if (error instanceof Error) message = error.message
+        return { error: message }
     }
 }
