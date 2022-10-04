@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Login } from '../../pages'
 import { showModal } from '../../redux/actions/modalActions'
 import LoginButton from './components/LoginButton'
@@ -22,7 +23,7 @@ function NavigationBar({ showModal }: Props) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse style={{ marginRight: 0 }} id="basic-navbar-nav">
                     <Nav className="me-auto align-items-center">
-                        {/* <Link className='nav-link' to="/">Assignment List</Link> */}
+                    <Link className='nav-link mr-4' to="/">Home</Link>
                         <LoginButton
                             onClick={() => showLoginModal()}
                         />

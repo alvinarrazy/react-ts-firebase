@@ -2,19 +2,20 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import "./theme/css/theme.css"
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { Home } from './pages';
+import { Home, Register } from './pages';
 import { Navbar } from './components';
 import ModalComp from './components/Modal/Modal';
+import { Route, Routes } from 'react-router';
 
 function App() {
   return (
     <>
-      <Router>
-        <Navbar />
-        <ModalComp />
-        <Route path='/' exact component={Home} />
-      </Router>
+      <Navbar />
+      <ModalComp />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="register" element={<Register />} />
+      </Routes>
     </>
   );
 }

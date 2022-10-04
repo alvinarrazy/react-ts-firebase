@@ -1,19 +1,17 @@
 import React from 'react'
-import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { Button, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { hideModal } from '../../redux/actions/modalActions'
-import { login } from '../../redux/actions/userActions'
+import { register } from '../../redux/actions/userActions'
 
 interface Props {
-    login: (email: string, password: string) => any,
-    hideModal: () => any
+    register: (email: string, password: string, username: string) => any
 }
 
-function Login({ login, hideModal }: Props) {
+function Register({ register }: Props) {
     const [input, setInput] = React.useState({
         email: '',
-        password: ''
+        password: '',
+        username: ''
     })
 
     function handleChange(target: any) {
@@ -27,12 +25,11 @@ function Login({ login, hideModal }: Props) {
     }
 
     function handleSubmit() {
-        const { email, password } = input
-        login(email, password)
+        register(input.email, input.password, input.username)
     }
 
     return (
-        <div>
+        <div className="p-6">
             <div className='row-3 mb-3'>
                 <p>Email</p>
                 <FormControl
@@ -52,6 +49,15 @@ function Login({ login, hideModal }: Props) {
                 />
             </div>
 
+            <div className='row-3 mb-3'>
+                <p>Username</p>
+                <FormControl
+                    name='username'
+                    placeholder="Insert your assignment title here!"
+                    onChange={(e) => handleChange(e.target)}
+                />
+            </div>
+
             <div className='d-flex flex-column align-items-center'>
                 <div className='row mb-2'>
                     <Button
@@ -59,18 +65,11 @@ function Login({ login, hideModal }: Props) {
                         size='lg'
                         className='pl-6 pr-6'
                         onClick={() => handleSubmit()}
-                    >Login</Button>
-                </div>
-                <div className='row'>
-                    <Link to='/register' onClick={() => hideModal()}>Register</Link>
+                    >Register</Button>
                 </div>
             </div>
         </div>
     )
-}
-
-Login.defaultProps = {
-    login: () => console.log("Any")
 }
 
 const mapStateToProps = (state: any) => {
@@ -80,9 +79,8 @@ const mapStateToProps = (state: any) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        login: (email: string, password: string) => dispatch(login(email, password)),
-        hideModal: () => dispatch(hideModal())
+        register: (email: string, password: string, username: string) => dispatch(register(email, password, username))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

@@ -3,41 +3,41 @@ import { USER_CASES } from "../constants"
 import userService from '../services/user';
 
 
-// export const login: any = (email: string, password: string) => {
-//     return async (dispatch: any) => {
-//         const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGIN
-//         let action: ActionT = {
-//             type: REQUEST,
-//             message: null,
-//             payload: null
-//         }
+export const login: any = (email: string, password: string) => {
+    return async (dispatch: any) => {
+        const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGIN
+        let action: ActionT = {
+            type: REQUEST,
+            message: null,
+            payload: null
+        }
 
-//         dispatch(action)
-//         try {
-//             let { error, result } = await userServices.login(email, password)
+        dispatch(action)
+        try {
+            let { error, result } = await userService.login(email, password)
 
-//             if (error) throw error
+            if (error) throw error
 
-//             action = {
-//                 ...action,
-//                 type: SUCCEED,
-//                 payload: result
-//             }
+            action = {
+                ...action,
+                type: SUCCEED,
+                payload: result
+            }
 
-//             return dispatch(action)
+            return dispatch(action)
 
-//         } catch (error) {
-//             console.log(error)
+        } catch (error) {
+            console.log(error)
 
-//             action = {
-//                 ...action,
-//                 type: FAILED,
-//                 message: String(error)
-//             }
-//             dispatch(action)
-//         }
-//     }
-// }
+            action = {
+                ...action,
+                type: FAILED,
+                message: String(error)
+            }
+            dispatch(action)
+        }
+    }
+}
 
 export const register = (email: string, password: string, username: string) => {
     return async (dispatch: any) => {
