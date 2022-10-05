@@ -1,5 +1,6 @@
 import { ActionT } from './actionT';
 import { DATA_CASES } from "../constants"
+import dataService from '../services/data';
 
 export const resetDataState = () => {
     return (dispatch: any) => {
@@ -9,7 +10,12 @@ export const resetDataState = () => {
     }
 }
 
-export const addNewData = (newData: string) => {
+export interface DataInterface {
+    name: string,
+    desc: string
+}
+
+export const addNewData = (newData: DataInterface) => {
     const { REQUEST, SUCCEED, FAILED } = DATA_CASES.ADD_DATA
     return async (dispatch: any) => {
         let action: ActionT = {
@@ -20,18 +26,62 @@ export const addNewData = (newData: string) => {
         dispatch(action)
 
         try {
-            //...service
+            let { result, error } = await dataService.addData(newData)
+
+            if (error) throw error
+
+            action = {
+                type: DATA_CASES.CHANGE_DATA,
+                message: "updating data",
+                payload: result
+            }
 
             return dispatch(action)
         } catch (error) {
-            // console.log('Error Line 34 userAction:', error)
-            // action = {
-            //     ...action,
-            //     type: FAILED,
-            //     message: error
-            // }
+            console.log(error)
 
-            // return dispatch(action)
+            action = {
+                ...action,
+                type: FAILED,
+                message: String(error)
+            }
+            dispatch(action)
+        }
+
+    }
+}
+
+export const getData = () => {
+    const { REQUEST, SUCCEED, FAILED } = DATA_CASES.ADD_DATA
+    return async (dispatch: any) => {
+        let action: ActionT = {
+            type: REQUEST,
+            message: null,
+            payload: null
+        }
+        dispatch(action)
+
+        try {
+            let { result, error } = await dataService.getData()
+
+            if (error) throw error
+
+            action = {
+                type: DATA_CASES.CHANGE_DATA,
+                message: "updating data",
+                payload: result
+            }
+
+            return dispatch(action)
+        } catch (error) {
+            console.log(error)
+
+            action = {
+                ...action,
+                type: FAILED,
+                message: String(error)
+            }
+            dispatch(action)
         }
 
     }

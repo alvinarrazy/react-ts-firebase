@@ -15,8 +15,8 @@ interface Props extends UserState {
 function NavigationBar({ showModal, userState }: Props) {
 
     function showLoginModal() {
-        if (userState.userProfile)
-            showModal("Hello", <AlreadyLogin username={userState.userProfile.username}/>)
+        if (userState.userProfile?.username)
+            showModal("Hello", <AlreadyLogin username={userState.userProfile?.username}/>)
         else
             showModal("Login", <Login />)
     }
@@ -24,7 +24,7 @@ function NavigationBar({ showModal, userState }: Props) {
     return (
         <Navbar bg="light" expand="lg">
             <Container fluid>
-                <Navbar.Brand className='ml-6' >{userState.userProfile ? userState.userProfile.username : "React Typescript X Firebase"}</Navbar.Brand>
+                <Navbar.Brand className='ml-6' >{userState.userProfile?.username ? userState.userProfile.username : "React Typescript X Firebase"}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse style={{ marginRight: 0 }} id="basic-navbar-nav">
                     <Nav className="me-auto align-items-center">

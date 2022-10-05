@@ -6,7 +6,9 @@ const types = {
         REQUEST: 'REQUEST',
         SUCCEED: 'SUCCEED',
         FAILED: 'FAILED'
-    }
+    },
+
+    CHANGE_DATA: "CHANGE_DATA"
 }
 
 export default types

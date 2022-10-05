@@ -16,22 +16,21 @@ const setInitialData = (payload: any) => {
     return {
         type: "SET_INITIAL",
         payload: {
-            userProfile: payload.userProfile
+            userProfile: payload.userProfile,
+            // data: payload.data
         },
     }
 }
 
 const getStorage: any = () => {
     return (dispatch: any) => {
-        let initialData: string | null = localStorage.getItem('userProfile')
 
-        if (initialData) {
-            let payload = {
-                userProfile: JSON.parse(initialData)
-            }
-            console.log(payload)
-            return dispatch(setInitialData(payload))
+        let payload = {
+            userProfile: JSON.parse(localStorage.getItem('userProfile') ?? "{}"),
+            data: JSON.parse(localStorage.getItem("data") ?? "{}")
         }
+        console.log(payload)
+        return dispatch(setInitialData(payload))
     };
 };
 
