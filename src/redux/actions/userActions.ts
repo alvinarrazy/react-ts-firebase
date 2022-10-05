@@ -8,8 +8,8 @@ export const login: any = (email: string, password: string) => {
         const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGIN
         let action: ActionT = {
             type: REQUEST,
-            message: null,
-            payload: null
+            message: "Request login",
+            payload: null,
         }
 
         dispatch(action)
@@ -21,9 +21,13 @@ export const login: any = (email: string, password: string) => {
             action = {
                 ...action,
                 type: SUCCEED,
-                payload: result
+                payload: result,
+                message: "Login succeed"
             }
 
+            localStorage.setItem("userProfile", JSON.stringify(result))
+
+            console.log(action.message)
             return dispatch(action)
 
         } catch (error) {
@@ -44,7 +48,7 @@ export const register = (email: string, password: string, username: string) => {
         const { REQUEST, SUCCEED, FAILED } = USER_CASES.REGISTER
         let action: ActionT = {
             type: REQUEST,
-            message: null,
+            message: "Request register",
             payload: null
         }
 
@@ -57,9 +61,11 @@ export const register = (email: string, password: string, username: string) => {
             action = {
                 ...action,
                 type: SUCCEED,
-                payload: result
+                payload: result,
+                message: "Register succeed"
             }
 
+            console.log(action.message)
             return dispatch(action)
 
         } catch (error) {

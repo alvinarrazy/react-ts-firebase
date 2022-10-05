@@ -4,26 +4,31 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Login } from '../../pages'
 import { showModal } from '../../redux/actions/modalActions'
+import { UserState } from '../../redux/reducers/userReducer'
+import AlreadyLogin from './components/AlreadyLogin'
 import LoginButton from './components/LoginButton'
 
-interface Props {
+interface Props extends UserState {
     showModal: (title: string, children: JSX.Element) => any,
 }
 
-function NavigationBar({ showModal }: Props) {
+function NavigationBar({ showModal, userState }: Props) {
 
     function showLoginModal() {
-        showModal("Login", <Login />)
+        if (userState.userProfile)
+            showModal("Hello", <AlreadyLogin username={userState.userProfile.username}/>)
+        else
+            showModal("Login", <Login />)
     }
 
     return (
         <Navbar bg="light" expand="lg">
             <Container fluid>
-                <Navbar.Brand className='ml-6' >React Typescript X Firebase</Navbar.Brand>
+                <Navbar.Brand className='ml-6' >{userState.userProfile ? userState.userProfile.username : "React Typescript X Firebase"}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse style={{ marginRight: 0 }} id="basic-navbar-nav">
                     <Nav className="me-auto align-items-center">
-                    <Link className='nav-link mr-4' to="/">Home</Link>
+                        <Link className='nav-link mr-4' to="/">Home</Link>
                         <LoginButton
                             onClick={() => showLoginModal()}
                         />
@@ -36,7 +41,7 @@ function NavigationBar({ showModal }: Props) {
 
 const mapStateToProps = (state: any) => {
     return {
-
+        userState: state.userState
     }
 }
 const mapDispatchToProps = (dispatch: any) => {
