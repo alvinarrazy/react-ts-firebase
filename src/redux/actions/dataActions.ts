@@ -35,6 +35,7 @@ export const addNewData = (newData: DataInterface) => {
                 message: "updating data",
                 payload: result
             }
+            console.log(action.message)
 
             return dispatch(action)
         } catch (error) {
@@ -71,6 +72,8 @@ export const getData = () => {
                 message: "updating data",
                 payload: result
             }
+
+            console.log(action.message)
 
             return dispatch(action)
         } catch (error) {

@@ -1,4 +1,4 @@
-import { setDoc, doc, collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { DataInterface } from "../actions/dataActions"
 
@@ -12,7 +12,7 @@ export default dataService
 
 async function addData(data: DataInterface) {
     try {
-        await setDoc(doc(db, "data"), {
+        await addDoc(collection(db, "data"), {
             name: data.name,
             description: data.desc
         })
