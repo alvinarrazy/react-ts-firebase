@@ -5,6 +5,7 @@ import { auth, db } from '../../firebase';
 const userService = {
     register,
     login,
+    logout
 }
 
 export default userService
@@ -53,6 +54,21 @@ async function login(email: string, password: string) {
                 email: credential.user.email,
                 username: userData.username
             }
+        }
+    } catch (error) {
+        let message = error
+        if (error instanceof Error) message = error.message
+        return { error: message }
+    }
+}
+
+
+async function logout() {
+    try {
+        await signOut(auth)
+
+        return {
+            result: null
         }
     } catch (error) {
         let message = error

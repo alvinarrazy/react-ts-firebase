@@ -80,3 +80,43 @@ export const register = (email: string, password: string, username: string) => {
         }
     }
 }
+
+export const logout: any = () => {
+    return async (dispatch: any) => {
+        const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGOUT
+        let action: ActionT = {
+            type: REQUEST,
+            message: "Request logout",
+            payload: null,
+        }
+
+        dispatch(action)
+        try {
+            let { error, result } = await userService.logout()
+
+            if (error) throw error
+
+            action = {
+                ...action,
+                type: SUCCEED,
+                payload: result,
+                message: "Logout succeed"
+            }
+
+            localStorage.removeItem("userProfile")
+
+            console.log(action.message)
+            return dispatch(action)
+
+        } catch (error) {
+            console.log(error)
+
+            action = {
+                ...action,
+                type: FAILED,
+                message: String(error)
+            }
+            dispatch(action)
+        }
+    }
+}

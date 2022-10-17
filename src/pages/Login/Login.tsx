@@ -29,6 +29,7 @@ function Login({ login, hideModal }: Props) {
     function handleSubmit() {
         const { email, password } = input
         login(email, password)
+        hideModal()
     }
 
     return (

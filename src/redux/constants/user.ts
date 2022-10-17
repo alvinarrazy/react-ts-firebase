@@ -29,9 +29,12 @@ const types = {
         FAILED: 'CHANGE_AVATAR_FAILED',
     },
 
-    LOGOUT_REQUEST: 'LOGOUT_REQUEST',
-    LOGOUT_SUCCEED: 'LOGOUT_SUCCEED',
-    LOGOUT_FAILURE: 'LOGOUT_FAILURE',
+    LOGOUT: {
+        REQUEST: 'LOGOUT_REQUEST',
+        SUCCEED: 'LOGOUT_SUCCEED',
+        FAILED: 'LOGOUT_FAILED',
+    }
+
 }
 
 export default types

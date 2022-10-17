@@ -20,6 +20,11 @@ const initialState = {
         succeed: false,
         failed: false,
         message: null
+    },
+    logoutProcess: {
+        request: false,
+        failed: false,
+        message: null
     }
 }
 
@@ -62,6 +67,40 @@ export const userReducer = (state = initialState, action: ActionT) => {
                 loginProcess: {
                     request: false,
                     succeed: false,
+                    failed: true,
+                    message: action.message
+                }
+            }
+        }
+        case USER_CASES.LOGOUT.REQUEST: {
+            return {
+                ...state,
+                userProfile: null,
+                logoutProcess: {
+                    request: true,
+                    succeed: false,
+                    failed: false,
+                    message: action.message
+                }
+            }
+        }
+        case USER_CASES.LOGOUT.SUCCEED: {
+            return {
+                ...state,
+                userProfile: null,
+                logoutProcess: {
+                    request: false,
+                    failed: false,
+                    message: action.message
+                }
+            }
+        }
+        case USER_CASES.LOGOUT.FAILED: {
+            return {
+                ...state,
+                userProfile: null,
+                logoutProcess: {
+                    request: false,
                     failed: true,
                     message: action.message
                 }
