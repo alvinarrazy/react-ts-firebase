@@ -1,122 +1,55 @@
-import { ActionT } from './actionT';
-import { USER_CASES } from "../constants"
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import userService from '../services/user';
 
-
-export const login: any = (email: string, password: string) => {
-    return async (dispatch: any) => {
-        const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGIN
-        let action: ActionT = {
-            type: REQUEST,
-            message: "Request login",
-            payload: null,
-        }
-
-        dispatch(action)
-        try {
-            let { error, result } = await userService.login(email, password)
-
-            if (error) throw error
-
-            action = {
-                ...action,
-                type: SUCCEED,
-                payload: result,
-                message: "Login succeed"
-            }
-
-            localStorage.setItem("userProfile", JSON.stringify(result))
-
-            console.log(action.message)
-            return dispatch(action)
-
-        } catch (error) {
-            console.log(error)
-
-            action = {
-                ...action,
-                type: FAILED,
-                message: String(error)
-            }
-            dispatch(action)
-        }
-    }
+export interface LoginBody {
+    email: string,
+    password: string
 }
+export const login = createAsyncThunk('user/login', async (data: LoginBody, { rejectWithValue }) => {
+    try {
+        let { error, result } = await userService.login(data)
 
-export const register = (email: string, password: string, username: string) => {
-    return async (dispatch: any) => {
-        const { REQUEST, SUCCEED, FAILED } = USER_CASES.REGISTER
-        let action: ActionT = {
-            type: REQUEST,
-            message: "Request register",
-            payload: null
-        }
+        if (error) throw error
 
-        dispatch(action)
-        try {
-            let { error, result } = await userService.register(email, password, username)
+        localStorage.setItem("userProfile", JSON.stringify(result))
 
-            if (error) throw error
-
-            action = {
-                ...action,
-                type: SUCCEED,
-                payload: result,
-                message: "Register succeed"
-            }
-
-            console.log(action.message)
-            return dispatch(action)
-
-        } catch (error) {
-            console.log(error)
-
-            action = {
-                ...action,
-                type: FAILED,
-                message: String(error)
-            }
-            dispatch(action)
-        }
+        return result
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error)
     }
+})
+
+export interface RegisterBody {
+    email: string,
+    password: string,
+    username: string
 }
+export const register = createAsyncThunk('user/register', async (data: RegisterBody, { rejectWithValue }) => {
+    try {
+        let { error, result } = await userService.register(data)
 
-export const logout: any = () => {
-    return async (dispatch: any) => {
-        const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGOUT
-        let action: ActionT = {
-            type: REQUEST,
-            message: "Request logout",
-            payload: null,
-        }
+        if (error) throw error
 
-        dispatch(action)
-        try {
-            let { error, result } = await userService.logout()
-
-            if (error) throw error
-
-            action = {
-                ...action,
-                type: SUCCEED,
-                payload: result,
-                message: "Logout succeed"
-            }
-
-            localStorage.removeItem("userProfile")
-
-            console.log(action.message)
-            return dispatch(action)
-
-        } catch (error) {
-            console.log(error)
-
-            action = {
-                ...action,
-                type: FAILED,
-                message: String(error)
-            }
-            dispatch(action)
-        }
+        return result
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error)
     }
-}
+})
+
+export const logout = createAsyncThunk('user/logout', async (_, { rejectWithValue }) => {
+    try {
+        let { error, result } = await userService.logout()
+
+        if (error) throw error
+
+        localStorage.removeItem("userProfile")
+
+        return result
+
+    } catch (error) {
+        console.log(error)
+        rejectWithValue(error)
+    }
+})

@@ -1,28 +1,30 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
+import { selectModal } from '../../redux/reducers/modalReducer'
+import { useAppSelector } from '../../redux/reducers/store'
 import './Modal.css'
-import { connect } from 'react-redux'
-import { hideModal } from '../../redux/actions/modalActions'
 
-interface Props {
-    modalState: {
-        isShow: boolean,
-        children: JSX.Element | null,
-        title: string | null
-    },
-    hideModal: () => any
+export interface IModal {
+    children: JSX.Element | null,
+    title: string | null
 }
 
-function ModalComp({ modalState, hideModal }: Props) {
+interface Props {
+    onHide: () => any
+}
+
+function ModalComp({ onHide }: Props) {
+    const modalState = useAppSelector(selectModal)
+
     return (
         <div className='modal-container'>
-            <Modal size={"lg"} scrollable show={modalState?.isShow} onHide={() => hideModal()}>
+            <Modal size={"lg"} scrollable show={modalState?.isShow} onHide={() => onHide()}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{modalState.title}</Modal.Title>
+                    <Modal.Title>{modalState.modal.title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{modalState?.children}</Modal.Body>
+                <Modal.Body>{modalState.modal.children}</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => hideModal()}>
+                    <Button variant="secondary" onClick={() => onHide()}>
                         Close
                     </Button>
                 </Modal.Footer>
@@ -34,20 +36,11 @@ function ModalComp({ modalState, hideModal }: Props) {
 ModalComp.defaultProps = {
     modalState: {
         isShow: false,
-        children: null,
-        title: null
+        modal: {
+            children: null,
+            title: null
+        }
     }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        modalState: state.modalState
-    }
-}
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        hideModal: () => dispatch(hideModal())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModalComp)
+export default ModalComp

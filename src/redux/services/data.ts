@@ -1,6 +1,8 @@
+import { ServiceResult } from './index';
+import { IData } from './../../types';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { DataInterface } from "../actions/dataActions"
+import { NewDataBody } from "../actions/dataActions"
 
 
 const dataService = {
@@ -10,7 +12,7 @@ const dataService = {
 
 export default dataService
 
-async function addData(data: DataInterface) {
+async function addData(data: NewDataBody): Promise<ServiceResult<IData[]>> {
     try {
         await addDoc(collection(db, "data"), {
             name: data.name,
@@ -29,13 +31,13 @@ async function addData(data: DataInterface) {
     }
 }
 
-async function getData() {
+async function getData(): Promise<ServiceResult<IData[]>> {
     try {
         let response = await getDocs(collection(db, "data"))
 
-        let dataArr: any[] = []
+        let dataArr: IData[] = []
         for (let doc of response.docs) {
-            dataArr.push(doc.data())
+            dataArr.push(doc.data() as IData)
         }
 
         return { result: dataArr }

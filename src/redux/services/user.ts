@@ -1,6 +1,10 @@
+import { LoginBody } from './../actions/userActions';
+import { UserData } from './../../types';
+import { ServiceResult } from './index';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { auth, db } from '../../firebase';
+import { RegisterBody } from '../actions/userActions';
 
 const userService = {
     register,
@@ -10,9 +14,9 @@ const userService = {
 
 export default userService
 
-async function register(email: string, password: string, username: string) {
+async function register(data: RegisterBody): Promise<ServiceResult<void>> {
     try {
-
+        const { email, password, username } = data
         let credential = await createUserWithEmailAndPassword(auth, email.trim(), password)
 
         await sendEmailVerification(credential.user)
@@ -29,8 +33,10 @@ async function register(email: string, password: string, username: string) {
     }
 }
 
-async function login(email: string, password: string) {
+
+async function login(data: LoginBody): Promise<ServiceResult<UserData>> {
     try {
+        const { email, password } = data
         let credential = await signInWithEmailAndPassword(auth, email, password)
 
         if (!credential?.user?.emailVerified) {
@@ -53,9 +59,9 @@ async function login(email: string, password: string) {
                 uid: credential.user.uid,
                 email: credential.user.email,
                 username: userData.username
-            }
+            } as UserData
         }
-    } catch (error) {
+    } catch (error: any) {
         let message = error
         if (error instanceof Error) message = error.message
         return { error: message }
@@ -63,14 +69,14 @@ async function login(email: string, password: string) {
 }
 
 
-async function logout() {
+async function logout(): Promise<ServiceResult<null>> {
     try {
         await signOut(auth)
 
         return {
             result: null
         }
-    } catch (error) {
+    } catch (error: any) {
         let message = error
         if (error instanceof Error) message = error.message
         return { error: message }

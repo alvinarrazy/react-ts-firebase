@@ -1,31 +1,48 @@
-import { ActionT } from './../actions/actionT';
-import {DATA_CASES} from "../constants";
+import { getData } from './../actions/dataActions';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { addNewData } from '../actions/dataActions';
+import { IData } from './../../types';
 
 export interface DataState {
-    dataState: {
-        data: any
-    }
+    data: IData[] | null,
+    isLoading: boolean
 }
 
-const initialState = {
-    data: null
+const initialState: DataState = {
+    data: null,
+    isLoading: false
 }
 
-export const dataReducer = (state = initialState, action: ActionT) => {
-    switch (action.type) {
-        case DATA_CASES.SET_INITIAL: {
-            return {
-                ...state,
-                data: action.payload.data
-            }
+const dataSlice = createSlice({
+    name: 'data',
+    initialState,
+    reducers: {
+        reset: (state) => {
+            state = initialState
         }
-        case DATA_CASES.CHANGE_DATA: {
-            return {
-                ...state,
-                data: action.payload
-            }
-        }
-        default:
-            return state
+    },
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(
+                isAnyOf(addNewData.pending, getData.pending),
+                (state) => {
+                    state.isLoading = true
+                }
+            )
+            .addMatcher(
+                isAnyOf(getData.fulfilled, addNewData.fulfilled),
+                (state, action) => {
+                    state.data = action.payload ?? null
+                    state.isLoading = false
+                }
+            )
     }
-}
+})
+
+export const { reset } = dataSlice.actions
+
+export const selectData = (state: DataState) => state
+
+export default dataSlice.reducer
+
+

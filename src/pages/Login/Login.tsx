@@ -1,17 +1,16 @@
 import React from 'react'
-import { Button, FormControl, InputGroup } from 'react-bootstrap'
-import { connect } from 'react-redux'
+import { Button, FormControl } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { hideModal } from '../../redux/actions/modalActions'
-import { login } from '../../redux/actions/userActions'
+import { login, LoginBody } from '../../redux/actions/userActions'
+import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
+import { selectUser } from '../../redux/reducers/userReducer'
 
-interface Props {
-    login: (email: string, password: string) => any,
-    hideModal: () => any
-}
+function Login() {
+    const dispatch = useAppDispatch()
+    const userState = useAppSelector(selectUser)
 
-function Login({ login, hideModal }: Props) {
-    const [input, setInput] = React.useState({
+    const [input, setInput] = React.useState<LoginBody>({
         email: '',
         password: ''
     })
@@ -27,9 +26,7 @@ function Login({ login, hideModal }: Props) {
     }
 
     function handleSubmit() {
-        const { email, password } = input
-        login(email, password)
-        hideModal()
+        dispatch(login(input))
     }
 
     return (
@@ -60,6 +57,7 @@ function Login({ login, hideModal }: Props) {
                         size='lg'
                         className='pl-6 pr-6'
                         onClick={() => handleSubmit()}
+                        disabled={userState.isLoading}
                     >Login</Button>
                 </div>
                 <div className='row'>
@@ -70,20 +68,4 @@ function Login({ login, hideModal }: Props) {
     )
 }
 
-Login.defaultProps = {
-    login: () => console.log("Any")
-}
-
-const mapStateToProps = (state: any) => {
-    return {
-
-    }
-}
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        login: (email: string, password: string) => dispatch(login(email, password)),
-        hideModal: () => dispatch(hideModal())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login
