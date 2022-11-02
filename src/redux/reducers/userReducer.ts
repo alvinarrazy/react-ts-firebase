@@ -1,112 +1,71 @@
-import { IAction } from './../actions/actionT';
-import { USER_CASES } from "../constants";
+import { IReducerStore } from './store';
+import { register, logout, login } from '../actions/userActions';
+import { UserData } from './../../types';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 export interface UserState {
-    userState: {
-        userProfile?: any,
-        loginProcess: {
-            request: boolean,
-            succeed: boolean,
-            failed: boolean,
-            message?: string | null
-        }
+    userData: UserData | null,
+    isLoading: boolean,
+    error: {
+        isError: boolean,
+        message: string
     }
 }
 
-const initialState = {
-    userProfile: null,
-    loginProcess: {
-        request: false,
-        succeed: false,
-        failed: false,
-        message: null
+const initialState: UserState = {
+    userData: null,
+    isLoading: false,
+    error: {
+        isError: false,
+        message: ''
+    }
+}
+
+const userSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {
+        clearError: (state) => {
+            state.error.isError = false;
+            state.error.message = "";
+        },
     },
-    logoutProcess: {
-        request: false,
-        failed: false,
-        message: null
-    }
-}
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(
+                isAnyOf(login.pending, register.pending, logout.pending),
+                (state) => {
+                    state.isLoading = true;
+                }
+            )
+            .addMatcher(
+                isAnyOf(login.fulfilled, logout.fulfilled, register.fulfilled),
+                (state, action) => {
+                    state.isLoading = false
+                    state.error = {
+                        isError: false,
+                        message: ''
+                    }
+                    state.userData = action.payload ?? null
+                }
+            )
+            .addMatcher(
+                isAnyOf(login.rejected, logout.rejected, register.rejected),
+                (state, action) => {
+                    state.isLoading = false
+                    state.error = {
+                        isError: true,
+                        message: action.error?.message ?? "error occured"
+                    }
+                    state.userData = null
+                }
+            )
+    },
+});
 
-export const userReducer = (state = initialState, action: IAction) => {
-    switch (action.type) {
-        case USER_CASES.SET_INITIAL: {
-            return {
-                ...state,
-                userProfile: action.payload.userProfile
-            }
-        }
-        case USER_CASES.LOGIN.REQUEST: {
-            return {
-                ...state,
-                userProfile: null,
-                loginProcess: {
-                    request: true,
-                    succeed: false,
-                    failed: false,
-                    message: action.message
-                }
-            }
-        }
-        case USER_CASES.LOGIN.SUCCEED: {
-            return {
-                ...state,
-                userProfile: action.payload,
-                loginProcess: {
-                    request: false,
-                    succeed: true,
-                    failed: false,
-                    message: action.message
-                },
-            }
-        }
-        case USER_CASES.LOGIN.FAILED: {
-            return {
-                ...state,
-                userProfile: null,
-                loginProcess: {
-                    request: false,
-                    succeed: false,
-                    failed: true,
-                    message: action.message
-                }
-            }
-        }
-        case USER_CASES.LOGOUT.REQUEST: {
-            return {
-                ...state,
-                userProfile: null,
-                logoutProcess: {
-                    request: true,
-                    succeed: false,
-                    failed: false,
-                    message: action.message
-                }
-            }
-        }
-        case USER_CASES.LOGOUT.SUCCEED: {
-            return {
-                ...state,
-                userProfile: null,
-                logoutProcess: {
-                    request: false,
-                    failed: false,
-                    message: action.message
-                }
-            }
-        }
-        case USER_CASES.LOGOUT.FAILED: {
-            return {
-                ...state,
-                userProfile: null,
-                logoutProcess: {
-                    request: false,
-                    failed: true,
-                    message: action.message
-                }
-            }
-        }
-        default:
-            return state
-    }
-}
+export const { clearError } = userSlice.actions;
+
+// Exporting pieces of state to be used in components with useSelector Hook
+export const selectUser = (state: IReducerStore) => state.userState;
+
+export default userSlice.reducer

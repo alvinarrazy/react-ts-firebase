@@ -1,24 +1,6 @@
-import { IAction } from './actionT';
-import { MODAL_CASES } from '../constants'
-import store from '../reducers/store';
+import { IModal } from './../../components/Modal/Modal';
+import { createAction } from '@reduxjs/toolkit'
 
-export const showModal: any = (title: string, children: JSX.Element) => {
-    return (dispatch: any) => {
-        let action: IAction = {
-            type: MODAL_CASES.SHOW_MODAL,
-            payload: { title, children },
-        }
+export const showModal = createAction<IModal>('modal/show')
 
-        return dispatch(action)
-    }
-}
-
-export const hideModal: any = () => {
-    return (dispatch: any) => {
-        let action: IAction = {
-            type: MODAL_CASES.HIDE_MODAL,
-        }
-
-        return dispatch(action)
-    }
-}
+export const hideModal = createAction('modal/hide')

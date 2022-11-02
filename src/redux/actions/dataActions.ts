@@ -1,87 +1,38 @@
-import { IAction } from './actionT';
-import { DATA_CASES } from "../constants"
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import dataService from '../services/data';
 
-export const resetDataState = () => {
-    return (dispatch: any) => {
-        dispatch({
-            type: DATA_CASES.RESET_DATA_STATE
-        })
-    }
-}
-
-export interface DataInterface {
+export interface NewDataBody {
     name: string,
     desc: string
 }
 
-export const addNewData = (newData: DataInterface) => {
-    const { REQUEST, SUCCEED, FAILED } = DATA_CASES.ADD_DATA
-    return async (dispatch: any) => {
-        let action: IAction = {
-            type: REQUEST,
-        }
-        dispatch(action)
+export const addNewData = createAsyncThunk('data/add', async (data: NewDataBody, { rejectWithValue }) => {
+    try {
+        let { result, error } = await dataService.addData(data)
 
-        try {
-            let { result, error } = await dataService.addData(newData)
+        if (error) throw error
 
-            if (error) throw error
-
-            action = {
-                type: DATA_CASES.CHANGE_DATA,
-                message: "updating data",
-                payload: result
-            }
-            console.log(action.message)
-
-            return dispatch(action)
-        } catch (error) {
-            console.log(error)
-
-            action = {
-                ...action,
-                type: FAILED,
-                message: String(error)
-            }
-            dispatch(action)
-        }
-
+        return result
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue(error)
     }
-}
+})
 
-export const getData = () => {
-    const { REQUEST, SUCCEED, FAILED } = DATA_CASES.ADD_DATA
-    return async (dispatch: any) => {
-        let action: IAction = {
-            type: REQUEST,
-        }
-        dispatch(action)
 
-        try {
-            let { result, error } = await dataService.getData()
+export const getData = createAsyncThunk('data/get', async (_, { rejectWithValue }) => {
+    try {
+        let { result, error } = await dataService.getData()
 
-            if (error) throw error
+        if (error) throw error
 
-            action = {
-                type: DATA_CASES.CHANGE_DATA,
-                message: "updating data",
-                payload: result
-            }
 
-            console.log(action.message)
-
-            return dispatch(action)
-        } catch (error) {
-            console.log(error)
-
-            action = {
-                ...action,
-                type: FAILED,
-                message: String(error)
-            }
-            dispatch(action)
-        }
-
+        return result
+    } catch (error) {
+        console.log(error)
+        rejectWithValue(error)
     }
-}
+})
+
+
+

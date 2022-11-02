@@ -1,40 +1,28 @@
-import { userReducer } from './userReducer';
-import { combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import { dataReducer } from './dataReducer'
-import { modalReducer } from './modalReducer'
+import userReducer, { UserState } from './userReducer';
+import modalReducer, { ModalState } from './modalReducer'
+import dataReducer, { DataState } from './dataReducer'
 import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-const store = configureStore({
+// Use throughout your app instead of plain `useDispatch` and `useSelector`
+
+
+export interface IReducerStore {
+    userState: UserState,
+    modalState: ModalState,
+    dataState: DataState
+}
+
+export const store = configureStore({
     reducer: {
-        dataState: dataReducer,
-        modalState: modalReducer,
         userState: userReducer,
+        modalState: modalReducer,
+        dataState: dataReducer
     },
 })
 
-const setInitialData = (payload: any) => {
-    return {
-        type: "SET_INITIAL",
-        payload: {
-            userProfile: payload.userProfile,
-            // data: payload.data
-        },
-    }
-}
-
-const getStorage: any = () => {
-    return (dispatch: any) => {
-
-        let payload = {
-            userProfile: JSON.parse(localStorage.getItem('userProfile') ?? "{}"),
-            data: JSON.parse(localStorage.getItem("data") ?? "{}")
-        }
-        console.log(payload)
-        return dispatch(setInitialData(payload))
-    };
-};
-
-store.dispatch(getStorage())
-
-export default store
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

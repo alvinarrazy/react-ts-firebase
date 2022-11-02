@@ -1,10 +1,10 @@
 import React from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { addNewData, DataInterface } from '../../redux/actions/dataActions'
+import { addNewData, NewDataBody } from '../../redux/actions/dataActions'
 
 interface Props {
-    addNewData: (data: DataInterface) => void,
+    addNewData: (data: NewDataBody) => void,
 }
 
 function AddData({ addNewData }: Props) {
@@ -24,7 +24,7 @@ function AddData({ addNewData }: Props) {
     }
 
     function handleSubmit() {
-        let data: DataInterface = {
+        let data: NewDataBody = {
             name: input.name,
             desc: input.description
         }
@@ -66,7 +66,7 @@ const mapStateToProps = (state: any) => {
 }
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        addNewData: (data: DataInterface) => dispatch(addNewData(data))
+        addNewData: (data: NewDataBody) => dispatch(addNewData(data))
     }
 }
 

@@ -1,14 +1,13 @@
 import React from 'react'
 import { Button, FormControl } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { register } from '../../redux/actions/userActions'
+import { register, RegisterBody } from '../../redux/actions/userActions'
+import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
+import { selectUser } from '../../redux/reducers/userReducer'
 
-interface Props {
-    register: (email: string, password: string, username: string) => any
-}
-
-function Register({ register }: Props) {
-    const [input, setInput] = React.useState({
+function Register() {
+    const dispatch = useAppDispatch()
+    const userState = useAppSelector(selectUser)
+    const [input, setInput] = React.useState<RegisterBody>({
         email: '',
         password: '',
         username: ''
@@ -25,7 +24,7 @@ function Register({ register }: Props) {
     }
 
     function handleSubmit() {
-        register(input.email, input.password, input.username)
+        dispatch(register(input))
     }
 
     return (
@@ -65,6 +64,7 @@ function Register({ register }: Props) {
                         size='lg'
                         className='pl-6 pr-6'
                         onClick={() => handleSubmit()}
+                        disabled={userState.isLoading}
                     >Register</Button>
                 </div>
             </div>
@@ -72,15 +72,4 @@ function Register({ register }: Props) {
     )
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-
-    }
-}
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        register: (email: string, password: string, username: string) => dispatch(register(email, password, username))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default Register

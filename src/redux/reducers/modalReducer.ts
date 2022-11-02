@@ -1,35 +1,46 @@
-import { IAction } from './../actions/actionT';
-import { MODAL_CASES } from "../constants";
+import { IReducerStore } from './store';
+import { IModal } from './../../components/Modal/Modal';
+import { showModal, hideModal } from './../actions/modalActions';
+import { createSlice } from '@reduxjs/toolkit';
 
-export interface IModal
-
-const initialState = {
-    isShow: false,
-    children: null,
-    title: null
+export interface ModalState {
+    isShow: boolean,
+    modal: IModal
 }
 
-export const modalReducer = (state = initialState, action: IAction) => {
-    switch (action.type) {
-        case MODAL_CASES.SET_INITIAL: {
-            return {
-                ...initialState,
-            }
-        }
-        case MODAL_CASES.SHOW_MODAL: {
-            return {
-                isShow: true,
-                children: action.payload.children,
-                title: action.payload.title
-            }
-        }
-        case MODAL_CASES.HIDE_MODAL: {
-            return {
-                isShow: false,
-                children: null
-            }
-        }
-        default:
-            return state
+const initialState: ModalState = {
+    isShow: false,
+    modal: {
+        children: null,
+        title: null
     }
 }
+
+const modalSlice = createSlice({
+    name: 'modal',
+    initialState,
+    reducers: {
+        reset: (state) => {
+            state = initialState
+        }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(hideModal, (state, action) => {
+                state.isShow = false
+                state.modal.children = null
+                state.modal.title = null
+            })
+            .addCase(showModal, (state, action) => {
+                state.isShow = true
+                state.modal = action.payload
+            })
+
+    }
+})
+
+export const { reset } = modalSlice.actions
+
+export const selectModal = (state: IReducerStore) => state.modalState
+
+export default modalSlice.reducer
