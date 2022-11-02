@@ -1,5 +1,7 @@
-import { ActionT } from './../actions/actionT';
-import {MODAL_CASES} from "../constants";
+import { IAction } from './../actions/actionT';
+import { MODAL_CASES } from "../constants";
+
+export interface IModal
 
 const initialState = {
     isShow: false,
@@ -7,7 +9,7 @@ const initialState = {
     title: null
 }
 
-export const modalReducer = (state = initialState, action: ActionT) => {
+export const modalReducer = (state = initialState, action: IAction) => {
     switch (action.type) {
         case MODAL_CASES.SET_INITIAL: {
             return {

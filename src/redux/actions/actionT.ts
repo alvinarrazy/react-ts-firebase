@@ -1,5 +1,5 @@
-export type ActionT = {
+export interface IAction {
     type: string;
-    message: string | null;
-    payload: any;
+    message?: string;
+    payload?: object;
 }

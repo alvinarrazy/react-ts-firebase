@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { Button, FormControl } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { hideModal } from '../../redux/actions/modalActions'

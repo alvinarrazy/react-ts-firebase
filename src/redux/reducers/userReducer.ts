@@ -1,4 +1,4 @@
-import { ActionT } from './../actions/actionT';
+import { IAction } from './../actions/actionT';
 import { USER_CASES } from "../constants";
 
 export interface UserState {
@@ -28,7 +28,7 @@ const initialState = {
     }
 }
 
-export const userReducer = (state = initialState, action: ActionT) => {
+export const userReducer = (state = initialState, action: IAction) => {
     switch (action.type) {
         case USER_CASES.SET_INITIAL: {
             return {

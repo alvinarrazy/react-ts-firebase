@@ -1,5 +1,5 @@
-import { ActionT } from './../actions/actionT';
-import {DATA_CASES} from "../constants";
+import { IAction } from './../actions/actionT';
+import { DATA_CASES } from "../constants";
 
 export interface DataState {
     dataState: {
@@ -11,7 +11,7 @@ const initialState = {
     data: null
 }
 
-export const dataReducer = (state = initialState, action: ActionT) => {
+export const dataReducer = (state = initialState, action: IAction) => {
     switch (action.type) {
         case DATA_CASES.SET_INITIAL: {
             return {

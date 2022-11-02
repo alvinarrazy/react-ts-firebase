@@ -1,4 +1,4 @@
-import { ActionT } from './actionT';
+import { IAction } from './actionT';
 import { USER_CASES } from "../constants"
 import userService from '../services/user';
 
@@ -6,7 +6,7 @@ import userService from '../services/user';
 export const login: any = (email: string, password: string) => {
     return async (dispatch: any) => {
         const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGIN
-        let action: ActionT = {
+        let action: IAction = {
             type: REQUEST,
             message: "Request login",
             payload: null,
@@ -46,7 +46,7 @@ export const login: any = (email: string, password: string) => {
 export const register = (email: string, password: string, username: string) => {
     return async (dispatch: any) => {
         const { REQUEST, SUCCEED, FAILED } = USER_CASES.REGISTER
-        let action: ActionT = {
+        let action: IAction = {
             type: REQUEST,
             message: "Request register",
             payload: null
@@ -84,7 +84,7 @@ export const register = (email: string, password: string, username: string) => {
 export const logout: any = () => {
     return async (dispatch: any) => {
         const { REQUEST, SUCCEED, FAILED } = USER_CASES.LOGOUT
-        let action: ActionT = {
+        let action: IAction = {
             type: REQUEST,
             message: "Request logout",
             payload: null,

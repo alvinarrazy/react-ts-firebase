@@ -1,16 +1,17 @@
 import { userReducer } from './userReducer';
-import { combineReducers, createStore, applyMiddleware } from 'redux'
+import { combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { dataReducer } from './dataReducer'
 import { modalReducer } from './modalReducer'
+import { configureStore } from '@reduxjs/toolkit';
 
-const rootReducer = combineReducers({
-    dataState: dataReducer,
-    modalState: modalReducer,
-    userState: userReducer,
+const store = configureStore({
+    reducer: {
+        dataState: dataReducer,
+        modalState: modalReducer,
+        userState: userReducer,
+    },
 })
-
-const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const setInitialData = (payload: any) => {
     return {

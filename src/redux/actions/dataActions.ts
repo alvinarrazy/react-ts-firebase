@@ -1,4 +1,4 @@
-import { ActionT } from './actionT';
+import { IAction } from './actionT';
 import { DATA_CASES } from "../constants"
 import dataService from '../services/data';
 
@@ -18,10 +18,8 @@ export interface DataInterface {
 export const addNewData = (newData: DataInterface) => {
     const { REQUEST, SUCCEED, FAILED } = DATA_CASES.ADD_DATA
     return async (dispatch: any) => {
-        let action: ActionT = {
+        let action: IAction = {
             type: REQUEST,
-            message: null,
-            payload: null
         }
         dispatch(action)
 
@@ -55,10 +53,8 @@ export const addNewData = (newData: DataInterface) => {
 export const getData = () => {
     const { REQUEST, SUCCEED, FAILED } = DATA_CASES.ADD_DATA
     return async (dispatch: any) => {
-        let action: ActionT = {
+        let action: IAction = {
             type: REQUEST,
-            message: null,
-            payload: null
         }
         dispatch(action)
 
