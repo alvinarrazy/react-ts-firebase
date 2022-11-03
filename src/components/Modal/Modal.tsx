@@ -18,7 +18,7 @@ function ModalComp({ onHide }: Props) {
 
     return (
         <div className='modal-container'>
-            <Modal size={"lg"} scrollable show={modalState?.isShow} onHide={() => onHide()}>
+            <Modal scrollable show={modalState?.isShow} onHide={() => onHide()}>
                 <Modal.Header closeButton>
                     <Modal.Title>{modalState.modal.title}</Modal.Title>
                 </Modal.Header>

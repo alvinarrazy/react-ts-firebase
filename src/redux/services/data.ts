@@ -1,5 +1,5 @@
 import { ServiceResult } from './index';
-import { IData } from './../../types';
+import { IData } from '../../interfaces';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { NewDataBody } from "../actions/dataActions"

@@ -1,5 +1,5 @@
 import { LoginBody } from './../actions/userActions';
-import { UserData } from './../../types';
+import { IUser } from '../../interfaces';
 import { ServiceResult } from './index';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut } from "firebase/auth"
@@ -34,7 +34,7 @@ async function register(data: RegisterBody): Promise<ServiceResult<void>> {
 }
 
 
-async function login(data: LoginBody): Promise<ServiceResult<UserData>> {
+async function login(data: LoginBody): Promise<ServiceResult<IUser>> {
     try {
         const { email, password } = data
         let credential = await signInWithEmailAndPassword(auth, email, password)
@@ -59,7 +59,7 @@ async function login(data: LoginBody): Promise<ServiceResult<UserData>> {
                 uid: credential.user.uid,
                 email: credential.user.email,
                 username: userData.username
-            } as UserData
+            } as IUser
         }
     } catch (error: any) {
         let message = error

@@ -1,10 +1,10 @@
 import { IReducerStore } from './store';
 import { register, logout, login } from '../actions/userActions';
-import { UserData } from './../../types';
+import { IUser } from '../../interfaces';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 export interface UserState {
-    userData: UserData | null,
+    userData: IUser | null,
     isLoading: boolean,
     error: {
         isError: boolean,

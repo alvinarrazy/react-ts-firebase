@@ -1,7 +1,7 @@
 import { getData } from './../actions/dataActions';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { addNewData } from '../actions/dataActions';
-import { IData } from './../../types';
+import { IData } from '../../interfaces';
 
 export interface DataState {
     data: IData[] | null,

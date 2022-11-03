@@ -1,4 +1,4 @@
-export interface UserData {
+export interface IUser {
     username: string,
     uid: string,
     email: string
