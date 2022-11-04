@@ -34,6 +34,7 @@ function Login() {
             <div className='row-3 mb-3'>
                 <p>Email</p>
                 <FormControl
+                    data-testid='email-input'
                     name='email'
                     placeholder="Insert your assignment title here!"
                     onChange={(e) => handleChange(e.target)}
@@ -43,6 +44,7 @@ function Login() {
             <div className='row-3 mb-3'>
                 <p>Password</p>
                 <FormControl
+                    data-testid='password-input'
                     name='password'
                     placeholder="Insert your assignment title here!"
                     type='password'
@@ -54,7 +56,7 @@ function Login() {
                 <div className='row mb-2'>
                     <Button
                         variant='primary'
-                        type='submit'
+                        data-testid='login-button'
                         size='lg'
                         className='pl-6 pr-6'
                         onClick={() => handleSubmit()}
