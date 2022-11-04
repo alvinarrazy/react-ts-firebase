@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import userService from '../services/user';
+import userService from '../services/authServices';
 
 export interface LoginBody {
     email: string,

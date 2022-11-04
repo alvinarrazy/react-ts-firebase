@@ -1,9 +1,9 @@
 import { IReducerStore } from './store';
-import { register, logout, login } from '../actions/userActions';
+import { register, logout, login } from '../actions/authActions';
 import { IUser } from '../../interfaces';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 
-export interface UserState {
+export interface AuthState {
     userData: IUser | null,
     isLoading: boolean,
     error: {
@@ -12,7 +12,7 @@ export interface UserState {
     }
 }
 
-const initialState: UserState = {
+const initialState: AuthState = {
     userData: null,
     isLoading: false,
     error: {
@@ -21,7 +21,7 @@ const initialState: UserState = {
     }
 }
 
-const userSlice = createSlice({
+const authSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -63,9 +63,9 @@ const userSlice = createSlice({
     },
 });
 
-export const { clearError } = userSlice.actions;
+export const { clearError } = authSlice.actions;
 
 // Exporting pieces of state to be used in components with useSelector Hook
-export const selectUser = (state: IReducerStore) => state.userState;
+export const selectAuth = (state: IReducerStore) => state.authState;
 
-export default userSlice.reducer
+export default authSlice.reducer

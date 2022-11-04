@@ -5,7 +5,7 @@ import { useAppSelector } from '../../redux/reducers/store'
 import './Modal.css'
 
 export interface IModal {
-    children: JSX.Element | null,
+    children: React.ReactNode | null,
     title: string | null
 }
 

@@ -2,13 +2,13 @@ import React from 'react'
 import { Button, Container, Table } from 'react-bootstrap'
 import { showModal } from '../../redux/actions/modalActions'
 import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
-import { selectUser } from '../../redux/reducers/userReducer'
+import { selectAuth } from '../../redux/reducers/authReducer'
 import AddData from '../AddData/AddData'
 
 
 function Home() {
   const dispatch = useAppDispatch()
-  const users = useAppSelector(selectUser)
+  const users = useAppSelector(selectAuth)
 
   return (
     <Container fluid className='p-4 home-container'>
@@ -20,7 +20,7 @@ function Home() {
               "Login first"
           }
         </h1>
-        <Button size='lg' onClick={() => dispatch(showModal({ children: null, title: "New Data" }))}>+</Button>
+        <Button size='lg' onClick={() => dispatch(showModal({ children: <AddData />, title: "New Data" }))}>+</Button>
       </Container>
       <Container>
         <Table className='p6'>

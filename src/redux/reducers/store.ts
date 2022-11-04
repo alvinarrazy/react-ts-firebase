@@ -1,4 +1,4 @@
-import userReducer, { UserState } from './userReducer';
+import authReducer, { AuthState } from './authReducer';
 import modalReducer, { ModalState } from './modalReducer'
 import dataReducer, { DataState } from './dataReducer'
 import { configureStore } from '@reduxjs/toolkit';
@@ -8,14 +8,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 
 export interface IReducerStore {
-    userState: UserState,
+    authState: AuthState,
     modalState: ModalState,
     dataState: DataState
 }
 
 export const store = configureStore({
     reducer: {
-        userState: userReducer,
+        authState: authReducer,
         modalState: modalReducer,
         dataState: dataReducer
     },
