@@ -13,7 +13,7 @@ function NavigationBar() {
     const dispatch = useAppDispatch()
 
     function showLoginModal() {
-        dispatch(showModal({ title: "Login", children: <Login /> }))
+        dispatch(showModal({ title: "Login", children: userState?.userData ? <AlreadyLogin username={userState?.userData?.username ?? "Username not found"} /> : <Login /> }))
     }
 
     return (

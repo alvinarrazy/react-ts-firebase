@@ -20,7 +20,7 @@ function Home() {
               "Login first"
           }
         </h1>
-        <Button size='lg' onClick={() => dispatch(showModal({ children: null, title: "New Data" }))}>+</Button>
+        <Button size='lg' onClick={() => dispatch(showModal({ children: <AddData />, title: "New Data" }))}>+</Button>
       </Container>
       <Container>
         <Table className='p6'>

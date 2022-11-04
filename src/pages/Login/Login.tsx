@@ -54,6 +54,7 @@ function Login() {
                 <div className='row mb-2'>
                     <Button
                         variant='primary'
+                        type='submit'
                         size='lg'
                         className='pl-6 pr-6'
                         onClick={() => handleSubmit()}
