@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { hideModal } from '../../../redux/actions/modalActions'
-import { logout } from '../../../redux/actions/userActions'
+import { logout } from '../../../redux/actions/authActions'
 
 interface Props {
   username: string
@@ -10,8 +10,8 @@ interface Props {
   hideModal: () => void
 }
 
-function AlreadyLogin({ username, logout,hideModal }: Props) {
-  function handleLogout(){
+function AlreadyLogin({ username, logout, hideModal }: Props) {
+  function handleLogout() {
     logout()
     hideModal()
   }

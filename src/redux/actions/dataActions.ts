@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import dataService from '../services/data';
+import dataService from '../services/dataServices';
 
 export interface NewDataBody {
     name: string,

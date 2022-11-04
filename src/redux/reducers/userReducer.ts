@@ -1,5 +1,5 @@
 import { IReducerStore } from './store';
-import { register, logout, login } from '../actions/userActions';
+import { register, logout, login } from '../actions/authActions';
 import { IUser } from '../../interfaces';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 

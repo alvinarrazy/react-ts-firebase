@@ -1,10 +1,10 @@
-import { LoginBody } from './../actions/userActions';
+import { LoginBody } from '../actions/authActions';
 import { IUser } from '../../interfaces';
 import { ServiceResult } from './index';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { auth, db } from '../../firebase';
-import { RegisterBody } from '../actions/userActions';
+import { RegisterBody } from '../actions/authActions';
 
 const userService = {
     register,

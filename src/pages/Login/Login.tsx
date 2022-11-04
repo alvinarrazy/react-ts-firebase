@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { hideModal } from '../../redux/actions/modalActions'
-import { login, LoginBody } from '../../redux/actions/userActions'
+import { login, LoginBody } from '../../redux/actions/authActions'
 import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
 import { selectUser } from '../../redux/reducers/userReducer'
 
