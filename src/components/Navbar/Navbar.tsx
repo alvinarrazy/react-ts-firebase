@@ -4,22 +4,22 @@ import { Link } from 'react-router-dom'
 import { Login } from '../../pages'
 import { showModal } from '../../redux/actions/modalActions'
 import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
-import { selectUser } from '../../redux/reducers/userReducer'
+import { selectAuth } from '../../redux/reducers/authReducer'
 import AlreadyLogin from './components/AlreadyLogin'
 import LoginButton from './components/LoginButton'
 
 function NavigationBar() {
-    const userState = useAppSelector(selectUser)
+    const authState = useAppSelector(selectAuth)
     const dispatch = useAppDispatch()
 
     function showLoginModal() {
-        dispatch(showModal({ title: "Login", children: userState?.userData ? <AlreadyLogin username={userState?.userData?.username ?? "Username not found"} /> : <Login /> }))
+        dispatch(showModal({ title: "Login", children: authState?.userData ? <AlreadyLogin username={authState?.userData?.username ?? "Username not found"} /> : <Login /> }))
     }
 
     return (
         <Navbar bg="light" expand="lg">
             <Container fluid>
-                <Navbar.Brand className='ml-6' >{userState.userData?.username ? userState.userData.username : "React Typescript X Firebase"}</Navbar.Brand>
+                <Navbar.Brand className='ml-6' >{authState.userData?.username ? authState.userData.username : "React Typescript X Firebase"}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse style={{ marginRight: 0 }} id="basic-navbar-nav">
                     <Nav className="me-auto align-items-center">

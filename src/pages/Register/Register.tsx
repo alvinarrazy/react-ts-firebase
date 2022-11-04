@@ -2,11 +2,11 @@ import React from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import { register, RegisterBody } from '../../redux/actions/authActions'
 import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
-import { selectUser } from '../../redux/reducers/userReducer'
+import { selectAuth } from '../../redux/reducers/authReducer'
 
 function Register() {
     const dispatch = useAppDispatch()
-    const userState = useAppSelector(selectUser)
+    const authState = useAppSelector(selectAuth)
     const [input, setInput] = React.useState<RegisterBody>({
         email: '',
         password: '',
@@ -64,7 +64,7 @@ function Register() {
                         size='lg'
                         className='pl-6 pr-6'
                         onClick={() => handleSubmit()}
-                        disabled={userState.isLoading}
+                        disabled={authState.isLoading}
                     >Register</Button>
                 </div>
             </div>

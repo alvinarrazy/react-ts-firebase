@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import { hideModal } from '../../redux/actions/modalActions'
 import { login, LoginBody } from '../../redux/actions/authActions'
 import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
-import { selectUser } from '../../redux/reducers/userReducer'
+import { selectAuth } from '../../redux/reducers/authReducer'
 
 function Login() {
     const dispatch = useAppDispatch()
-    const userState = useAppSelector(selectUser)
+    const authState = useAppSelector(selectAuth)
 
     const [input, setInput] = React.useState<LoginBody>({
         email: '',
@@ -58,7 +58,7 @@ function Login() {
                         size='lg'
                         className='pl-6 pr-6'
                         onClick={() => handleSubmit()}
-                        disabled={userState.isLoading}
+                        disabled={authState.isLoading}
                     >Login</Button>
                 </div>
                 <div className='row'>
