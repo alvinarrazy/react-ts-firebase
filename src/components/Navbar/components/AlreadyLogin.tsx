@@ -1,19 +1,20 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import { hideModal } from '../../../redux/actions/modalActions'
-import { logout } from '../../../redux/actions/authActions'
+import { useAppDispatch } from '../../../redux'
+import { logout } from '../../../redux/auth/actions'
+import { hideModal } from '../../../redux/modal/actions'
+import { ModalDispatch } from '../../../redux/modal/interfaces'
 
 interface Props {
   username: string
-  logout: () => void
-  hideModal: () => void
 }
 
-function AlreadyLogin({ username, logout, hideModal }: Props) {
+function AlreadyLogin({ username }: Props) {
+  const dispatch: ModalDispatch = useAppDispatch()
+
   function handleLogout() {
-    logout()
-    hideModal()
+    dispatch(logout())
+    dispatch(hideModal())
   }
 
   return (
@@ -24,16 +25,4 @@ function AlreadyLogin({ username, logout, hideModal }: Props) {
   )
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-
-  }
-}
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    logout: () => dispatch(logout()),
-    hideModal: () => dispatch(hideModal())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AlreadyLogin)
+export default AlreadyLogin

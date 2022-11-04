@@ -1,10 +1,8 @@
-import { LoginBody } from '../actions/authActions';
-import { IUser } from '../../interfaces';
-import { ServiceResult } from './index';
+import { IUser, LoginBody, RegisterBody } from './interfaces';
+import { IService } from '..';
 import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { auth, db } from '../../firebase';
-import { RegisterBody } from '../actions/authActions';
 
 const userService = {
     register,
@@ -14,7 +12,7 @@ const userService = {
 
 export default userService
 
-async function register(data: RegisterBody): Promise<ServiceResult<void>> {
+async function register(data: RegisterBody): Promise<IService<void>> {
     try {
         const { email, password, username } = data
         let credential = await createUserWithEmailAndPassword(auth, email.trim(), password)
@@ -34,7 +32,7 @@ async function register(data: RegisterBody): Promise<ServiceResult<void>> {
 }
 
 
-async function login(data: LoginBody): Promise<ServiceResult<IUser>> {
+async function login(data: LoginBody): Promise<IService<IUser>> {
     try {
         const { email, password } = data
         let credential = await signInWithEmailAndPassword(auth, email, password)
@@ -69,7 +67,7 @@ async function login(data: LoginBody): Promise<ServiceResult<IUser>> {
 }
 
 
-async function logout(): Promise<ServiceResult<null>> {
+async function logout(): Promise<IService<null>> {
     try {
         await signOut(auth)
 

@@ -1,50 +1,45 @@
 import React from 'react'
 import { Button, Container, Table } from 'react-bootstrap'
-import { showModal } from '../../redux/actions/modalActions'
-import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
-import { selectAuth } from '../../redux/reducers/authReducer'
-import AddData from '../AddData/AddData'
+import { useAppDispatch, useAppSelector } from '../../redux'
 
 
 function Home() {
-  const dispatch = useAppDispatch()
-  const users = useAppSelector(selectAuth)
+    const authState = useAppSelector((state) => state.authState)
 
-  return (
-    <Container fluid className='p-4 home-container'>
-      <Container className='mt-4 d-flex justify-content-between'>
-        <h1>
-          {
-            users.userData?.username ?
-              users.userData.username :
-              "Login first"
-          }
-        </h1>
-        <Button size='lg' onClick={() => dispatch(showModal({ children: <AddData />, title: "New Data" }))}>+</Button>
-      </Container>
-      <Container>
-        <Table className='p6'>
-          <thead >
-            <tr>
-              <td>Name</td>
-              <td>Description</td>
-            </tr>
-          </thead>
-          {
-            false ?
-              <tbody>
+    return (
+        <Container fluid className='p-4 home-container'>
+            <Container className='mt-4 d-flex justify-content-between'>
+                <h1>
+                    {
+                        authState.userProfile?.username ?
+                            authState.userProfile.username :
+                            "Login first"
+                    }
+                </h1>
+            </Container>
+            <Container>
+                <Table className='p6'>
+                    <thead >
+                        <tr>
+                            <td>Name</td>
+                            <td>Description</td>
+                        </tr>
+                    </thead>
+                    {
+                        false ?
+                            <tbody>
 
-              </tbody>
-              :
-              <tr className=''>
-                <td>
-                  No data
-                </td>
-              </tr>
-          }
-        </Table>
-      </Container>
-    </Container>)
+                            </tbody>
+                            :
+                            <tr className=''>
+                                <td>
+                                    No data
+                                </td>
+                            </tr>
+                    }
+                </Table>
+            </Container>
+        </Container>)
 }
 
 export default Home

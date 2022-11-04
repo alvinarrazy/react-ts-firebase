@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal, Button } from 'react-bootstrap'
-import { selectModal } from '../../redux/reducers/modalReducer'
-import { useAppSelector } from '../../redux/reducers/store'
+import { useAppSelector } from '../../redux'
 import './Modal.css'
 
 export interface IModal {
@@ -14,7 +13,7 @@ interface Props {
 }
 
 function ModalComp({ onHide }: Props) {
-    const modalState = useAppSelector(selectModal)
+    const modalState = useAppSelector((state) => state.modalState)
 
     return (
         <div className='modal-container'>

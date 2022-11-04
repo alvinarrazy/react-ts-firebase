@@ -1,14 +1,13 @@
 import React from 'react'
 import { Button, FormControl } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { hideModal } from '../../redux/actions/modalActions'
-import { login, LoginBody } from '../../redux/actions/authActions'
-import { useAppDispatch, useAppSelector } from '../../redux/reducers/store'
-import { selectAuth } from '../../redux/reducers/authReducer'
+import { RootState, useAppDispatch, useAppSelector } from '../../redux'
+import { login } from '../../redux/auth/actions'
+import { AuthDispatch, LoginBody } from '../../redux/auth/interfaces'
 
 function Login() {
-    const dispatch = useAppDispatch()
-    const authState = useAppSelector(selectAuth)
+    const dispatch: AuthDispatch = useAppDispatch()
+    const authState = useAppSelector((state: RootState) => state.authState)
 
     const [input, setInput] = React.useState<LoginBody>({
         email: '',
@@ -64,7 +63,6 @@ function Login() {
                     >Login</Button>
                 </div>
                 <div className='row'>
-                    <Link to='/register' onClick={() => hideModal()}>Register</Link>
                 </div>
             </div>
         </div>
